@@ -21,16 +21,21 @@ country_to_pop = dict()
 def get_country_count():
     """Return the number of countries in country_pop.  
     NOTE:  Assume data (country_pop) will always have a header"""
-    
+    lines = country_pop.strip().split('\n')
+    # Subtracting 1 to exclude the header line
+    return len(lines) - 1
 
 def conv_num_with_commas(number_text):
     """Convert a number with commas (str) to a number.
        e.g. '1,000' would be converted to 1000"""
-
+    return int(number_text.replace(',', ''))
 
 def get_top_five_countries():
     """Return a list of names of the top five countries in terms of population"""
-
+    if not country_to_pop:
+     set_country_to_pop()
+    sorted_countries = sorted(country_to_pop.keys(), key=lambda x: country_to_pop[x][0], reverse=True)
+    return sorted_countries[:5]
 
 def set_country_to_pop():
     """Sets the global country_to_pop dictionary where key is country name
@@ -39,20 +44,36 @@ def set_country_to_pop():
                Pop 01Jul2017 column
             2. The % decrease as a number
     """
-
+    global country_to_pop
+    lines = country_pop.strip().split('\n')
+    header = lines[0].split('\t')
+    for line in lines[1:]:
+        parts = line.split('\t')
+        country_name = parts[header.index('Country')]
+        population = conv_num_with_commas(parts[header.index('Pop 01Jul2017')])
+        percentage_change = float(parts[header.index('Change')].strip('%'))
+        country_to_pop[country_name] = (population, percentage_change)
 
 def get_population(country_name):
     """Given the name of the country, return the population as of 01Jul2017
        from country_to_pop.  If the country_to_pop is
        empty (i.e. no keys or values), then run set_country_to_pop
        to initialize it."""
-
+    if not country_to_pop:
+     set_country_to_pop()
+    return country_to_pop.get(country_name, (0, 0))
 
 def get_continents():
     """Return the list of continents"""
-
+    continents = set(country['Continent'] for country in country_pop)
+    return list(continents)
 
 def get_continent_populations():
     """Returns a dict where the key is the name of the continent and
        the value is the total population of all countries on that continent"""
-
+    continent_populations = {}
+    for country in country_pop:
+        continent = country['Continent']
+        population = conv_num_with_commas(country['Pop 01Jul2017'])
+        continent_populations[continent] = continent_populations.get(continent, 0) + population
+    return continent_populations 
