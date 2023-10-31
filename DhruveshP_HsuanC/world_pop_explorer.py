@@ -14,8 +14,9 @@ from world_pop_by_country import data as country_pop
 
 # Key = country name and 
 # Value = population as a number (i.e. not text containing commas)
-#
+
 country_to_pop = dict()
+
 
 
 
@@ -32,10 +33,9 @@ def conv_num_with_commas(number_text):
 
 def get_top_five_countries():
     """Return a list of names of the top five countries in terms of population"""
-    if not country_to_pop:
-     set_country_to_pop()
-    sorted_countries = sorted(country_to_pop.keys(), key=lambda x: country_to_pop[x][0], reverse=True)
-    return sorted_countries[:5]
+    sorted_countries = sorted(country_to_pop.values(), key=lambda x: x['Pop 01Jul2017'], reverse=True)
+    top_five = [entry['Country'] for entry in sorted_countries[:5]]
+    return top_five
 
 def set_country_to_pop():
     """Sets the global country_to_pop dictionary where key is country name
@@ -43,7 +43,7 @@ def set_country_to_pop():
             1. A numeric version of the comma separated number in the
                Pop 01Jul2017 column
             2. The % decrease as a number
-    """
+    """ 
     global country_to_pop
     lines = country_pop.strip().split('\n')
     header = lines[0].split('\t')
@@ -53,6 +53,8 @@ def set_country_to_pop():
         population = conv_num_with_commas(parts[header.index('Pop 01Jul2017')])
         percentage_change = float(parts[header.index('Change')].strip('%'))
         country_to_pop[country_name] = (population, percentage_change)
+
+
 
 def get_population(country_name):
     """Given the name of the country, return the population as of 01Jul2017
