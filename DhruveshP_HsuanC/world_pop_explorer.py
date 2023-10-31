@@ -17,6 +17,7 @@ from world_pop_by_country import data as country_pop
 #
 country_to_pop = dict()
 
+
 country_pop_lines = country_pop.splitlines( )
 header = country_pop_lines[0].split('\t')
 
@@ -36,11 +37,13 @@ def get_country_count():
 def conv_num_with_commas(number_text):
     """Convert a number with commas (str) to a number.
        e.g. '1,000' would be converted to 1000"""
-
+    return int(number_text.replace(',', ''))
 
 def get_top_five_countries():
     """Return a list of names of the top five countries in terms of population"""
-
+    sorted_countries = sorted(country_to_pop.values(), key=lambda x: x['Pop 01Jul2017'], reverse=True)
+    top_five = [entry['Country'] for entry in sorted_countries[:5]]
+    return top_five
 
 def set_country_to_pop():
     """Sets the global country_to_pop dictionary where key is country name
@@ -49,6 +52,8 @@ def set_country_to_pop():
                Pop 01Jul2017 column
             2. The % decrease as a number
     """
+    
+
 
 
 def get_population(country_name):
