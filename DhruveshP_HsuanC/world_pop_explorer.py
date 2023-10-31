@@ -17,11 +17,21 @@ from world_pop_by_country import data as country_pop
 #
 country_to_pop = dict()
 
+country_pop_lines = country_pop.splitlines( )
+header = country_pop_lines[0].split('\t')
+
+for country_pop_row in country_pop_lines[1:]:
+    values = country_pop_row.split('\t')
+    entry = {header[i]: values[i] for i in range(len(header))}
+    entry['Pop 01Jul2016'] = int(entry['Pop 01Jul2016'].replace(',', ''))
+    entry['Pop 01Jul2017'] = int(entry['Pop 01Jul2017'].replace(',', ''))
+    country_to_pop[entry['Country']] = entry
+
 
 def get_country_count():
     """Return the number of countries in country_pop.  
     NOTE:  Assume data (country_pop) will always have a header"""
-    
+    return len (country_to_pop)
 
 def conv_num_with_commas(number_text):
     """Convert a number with commas (str) to a number.
