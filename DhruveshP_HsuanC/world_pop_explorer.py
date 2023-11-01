@@ -18,7 +18,8 @@ from world_pop_by_country import data as country_pop
 country_to_pop = dict()
 
 country_pop_lines = country_pop.splitlines( )
-header = country_pop_lines[0].split('\t')
+header_S = country_pop_lines[0].split('\t')
+header = [col.strip() for col in header_S] 
 
 for country_pop_row in country_pop_lines[1:]:
     values = country_pop_row.split('\t')
@@ -65,25 +66,48 @@ def set_country_to_pop():
 
 
 def get_population(country_name):
-    """Given the name of the country, return the population as of 01Jul2017
-       from country_to_pop.  If the country_to_pop is
-       empty (i.e. no keys or values), then run set_country_to_pop
+    """Given the name of the country, return the population as of 
+       Pop 01Jul2017 from country_to_pop.  
+       If the country_to_pop is empty (i.e. no keys or values), 
+       then run set_country_to_pop
        to initialize it."""
     if not country_to_pop:
-     set_country_to_pop()
-    return country_to_pop.get(country_name, (0, 0))
+        set_country_to_pop()
+    if country_name in country_to_pop:
+        population_data = country_to_pop[country_name]
+        return population_data['Pop 01Jul2017']
+    else:
+        return None
+
+   
+    
 
 def get_continents():
     """Return the list of continents"""
-    continents = set(country['Continent'] for country in country_pop)
-    return list(continents)
+    continents = set()
+    for country_data in country_to_pop.values():
+        if 'Continent' in country_data:
+            continent = country_data['Continent']
+            continents.add(continent)
+    return sorted(list(continents))
 
+
+
+    
 def get_continent_populations():
     """Returns a dict where the key is the name of the continent and
        the value is the total population of all countries on that continent"""
     continent_populations = {}
-    for country in country_pop:
-        continent = country['Continent']
-        population = conv_num_with_commas(country['Pop 01Jul2017'])
-        continent_populations[continent] = continent_populations.get(continent, 0) + population
+    for country_data in country_to_pop.values():
+        continent = country_data['Continent']
+        population = country_data['Pop 01Jul2017']
+
+        if continent in continent_populations:
+            continent_populations[continent] += population
+        else:
+            continent_populations[continent] = population
+
     return continent_populations 
+
+
+
