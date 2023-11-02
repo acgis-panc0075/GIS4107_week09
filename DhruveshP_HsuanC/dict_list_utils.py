@@ -30,12 +30,14 @@ def get_missing_keys_with_count(dict_ref, dict_to_compare):
     count = len( missing_key_list )
     return count,missing_key_list
 
+
 def get_unique(in_list):
     """Retuns a list of unique values from in_list
     Example:  in_list = [1, 2, 2, 3] returns [1, 2, 3]
     """
     unique_values = set(in_list)
     return list ( unique_values )
+
 
 def flatten_list(in_list):
     """ 
