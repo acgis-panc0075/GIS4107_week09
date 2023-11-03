@@ -233,3 +233,4 @@ data="""Rank	Country	 Continent	Statistical region	Pop 01Jul2016	Pop 01Jul2017	C
 231	Niue	Oceania	Polynesia	1,624	1,618	-0.4%
 232	Tokelau	Oceania	Polynesia	1,282	1,300	+1.4%
 233	Vatican City	Europe	Southern Europe	801	792	-1.1%"""
+
