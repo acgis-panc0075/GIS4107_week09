@@ -9,40 +9,40 @@
 # Last update: 31/10/2022
 # ------------------------------------------------------------------------------
 
-def get_missing_keys(dict_ref, dict_to_compare):
+def get_missing_keys( dict_ref, dict_to_compare ) :
     """Returns a list of missing keys.
        dict_to_compare is the dict that may have missing keys
        dict_ref is the dict to compare it to
        Example:  dict_ref = {1:1, 2:2, 3:3}, dict_to_compare = {2:2}
                  returns [1, 3]
     """
-    missing_keys = [key for key in dict_ref if key not in dict_to_compare]
+    missing_keys = [ key for key in dict_ref if key not in dict_to_compare ]
     return list( missing_keys )
 
 
 
-def get_missing_keys_with_count(dict_ref, dict_to_compare):
+def get_missing_keys_with_count ( dict_ref, dict_to_compare ) :
     """Returns a count and a list of missing keys.
        dict_to_compare is the dict that may have missing keys
        dict_ref is the dict to compare it to
        Example:  dict_ref = {1:1, 2:2, 3:3}, dict_to_compare = {2:2}
                  returns (2, [1, 3])
     """
-    missing_key_list = [key for key in dict_ref if key not in dict_to_compare]
-    count = len( missing_key_list )
-    return count,missing_key_list
+    missing_key_list = [ key for key in dict_ref if key not in dict_to_compare ]
+    count = len ( missing_key_list )
+    return count , missing_key_list
 
 
 
-def get_unique(in_list):
+def get_unique( in_list ):
     """Retuns a list of unique values from in_list
     Example:  in_list = [1, 2, 2, 3] returns [1, 2, 3]
     """
-    unique_values = set(in_list)
+    unique_values = set (in_list)
     return list ( unique_values )
 
 
-def flatten_list(in_list):
+def flatten_list ( in_list ) :
     """ 
     This function will return a list that contains the items of
     in_list that are not lists or tuples as well as the items
@@ -53,8 +53,8 @@ def flatten_list(in_list):
     """
     open_list = []
     for item in in_list:
-        if isinstance(item, (list, tuple)):
-            open_list.extend(flatten_list(item))
+        if isinstance ( item, (list, tuple )) :
+            open_list.extend ( flatten_list ( item ))
         else:
-            open_list.append(item)
+            open_list.append ( item )
     return open_list
