@@ -25,13 +25,17 @@ country_pop_list = [item.split('\t') for item in country_pop_lines]
 def get_country_count():
     """Return the number of countries in country_pop.  
     NOTE:  Assume data (country_pop) will always have a header"""
-    data_lines = country_pop.split('\n')
-    return len(data_lines) - 1
+    return len(country_pop_lines) 
+
+
 
 def conv_num_with_commas(number_text):
     """Convert a number with commas (str) to a number.
        e.g. '1,000' would be converted to 1000"""
     return int(number_text.replace(',', ''))
+
+
+
 
 def get_top_five_countries():
     """Return a list of names of the top five countries in terms of population"""
@@ -39,6 +43,9 @@ def get_top_five_countries():
     for item in country_pop_list[slice(5)]:
         result.append(item[1])
     return result
+
+
+
 
 def set_country_to_pop():
     """Sets the global country_to_pop dictionary where key is country name
@@ -58,8 +65,7 @@ def get_population(country_name):
     """Given the name of the country, return the population as of 
        Pop 01Jul2017 from country_to_pop.  
        If the country_to_pop is empty (i.e. no keys or values), 
-       then run set_country_to_pop
-       to initialize it."""
+       then run set_country_to_pop to initialize it."""
     global country_to_pop
     if not bool(country_to_pop):
         set_country_to_pop()
