@@ -19,6 +19,8 @@ def get_missing_keys(dict_ref, dict_to_compare):
     missing_keys = [key for key in dict_ref if key not in dict_to_compare]
     return list( missing_keys )
 
+
+
 def get_missing_keys_with_count(dict_ref, dict_to_compare):
     """Returns a count and a list of missing keys.
        dict_to_compare is the dict that may have missing keys
@@ -29,6 +31,7 @@ def get_missing_keys_with_count(dict_ref, dict_to_compare):
     missing_key_list = [key for key in dict_ref if key not in dict_to_compare]
     count = len( missing_key_list )
     return count,missing_key_list
+
 
 
 def get_unique(in_list):
